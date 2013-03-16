@@ -1,0 +1,92 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH vdr-addon-lifeguard 1 "December 11, 2007" 0.0.2
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+vdr-addon-lifeguard \- Check whether vdr should shutdown the machine
+.SH DESCRIPTION
+The \fBvdr-addon-lifeguard\fP performs various tests specified by the user when vdr wants to shutdown the machine. The shutdown is postponed if any of the tests indicates that there are other processes that should not be interrupted.
+.\" TeX users may be more comfortable with the \fB<whatever>\fP and
+.\" \fI<whatever>\fP escape sequences to invode bold face and italics, 
+.\" respectively.
+.SH CONFIGURATION OPTIONS
+The test performed by vdr-addon-lifeguard are configured through entries in \fB/etc/vdr/lifeguard.conf\fP.
+.PP
+Except for comments and empty lines, each line contains 3 fields:
+type, pattern, and description. Field values are separated by blanks.
+Blank characters in field values have to be escaped, e.g.  'Multi\\\ word\\\ field\\\ value'.
+.PP
+Recognized \fBtypes\fP are:
+.TP
+.B usr
+active user
+.TP
+.B tcp
+network connection
+.TP
+.B host
+host alive
+.TP
+.B cmd
+general Linux command
+.TP
+.B sh
+shell script
+.TP
+.B smb
+samba locks or shares
+.TP
+.B afp
+Apple file sharing
+.TP
+.B other
+any kind of process
+.PP
+The \fBpattern\fP is compared by lifeguard to the output of a system status
+command. Which status command is used depends on the type specified:
+.TP
+.B usr
+user
+.TP
+.B tcp
+netstat -t
+.TP
+.B host
+ping
+.TP
+.B cmd
+pidof
+.TP
+.B sh
+pidof -x
+.TP
+.B smb
+smbstatus
+.TP
+.B afp
+ps
+.TP
+.B other
+ps
+.PP
+With the \fIusr\fP, \fItcp\fP, and \fPother\fP types, the pattern can be an extended regular expression, see grep(1).
+The default pattern for \fIusr\fP matches all user names.
+With the \fIhost\fP type, the pattern should be a host name or IP address.
+With the \fIsmb\fP type, there a two special patterns \fIlocks\fP and \fIshares\fP to tell lifeguard to look for active locks or shares, respectively.
+With the \fIafp\fP type, the pattern is ignored.
+.PP
+The \fBdescription\fP is a user readable text used in the reason given if a
+shutdown is cancelled. If no description is specified, the pattern or a predefind explanation will be used instead.
+
+.SH FILES
+/etc/vdr/lifeguard.conf, /usr/share/vdr/S91.lifeguard
+.SH SEE ALSO
+.BR vdr (1),
+.BR /usr/share/doc/vdr/README.Debian
+.br
+.SH AUTHOR
+vdr-addon-lifeguard and this manpage were written by Malte Forkel <malte.forkel@berlin.de>, for the Debian project (but may be used by others).
+

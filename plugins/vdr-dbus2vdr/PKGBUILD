@@ -1,0 +1,61 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# See http://wiki.archlinux.org/index.php/VCS_PKGBUILD_Guidelines
+# for more information on packaging from GIT sources.
+
+# Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
+pkgname=vdr-dbus2vdr-git
+pkgver=20130316
+_pkgname=vdr-dbus2vdr
+_vdrapi=1.7.41
+pkgrel=1
+pkgdesc="dbus control interface for the VDR"
+url="https://github.com/flensrocker/vdr-plugin-dbus2vdr"
+arch=('x86_64' 'i686')
+license=('GPL2')
+depends=('gcc-libs' 'png++' "vdr-api=${_vdrapi}")
+_plugname=$(echo $pkgname | sed 's/vdr-//g')
+replaces=("vdr-plugin-$_plugname" "$_pkgname")
+conflicts=("vdr-plugin-$_plugname" "$_pkgname")
+makedepends=('git')
+md5sums=('SKIP')
+
+_gitroot=git://github.com/flensrocker/vdr-plugin-dbus2vdr.git
+_gitname=vdr-plugin-dbus2vdr
+
+build() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+
+  if [[ -d "$_gitname" ]]; then
+    cd "$_gitname" && git pull origin
+    msg "The local files are updated."
+  else
+    git clone "$_gitroot" "$_gitname"
+  fi
+
+  msg "GIT checkout done or server timeout"
+  msg "Starting build..."
+
+  rm -rf "$srcdir/$_gitname-build"
+  git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build"
+  cd "$srcdir/$_gitname-build"
+  make
+}
+
+package() {
+  cd "$srcdir/$_gitname-build"
+
+  make DESTDIR="$pkgdir/" install
+  mkdir -p $pkgdir/usr/share/vdr/plugins/dbus2vdr
+  mkdir -p $pkgdir/usr/bin/
+  install -Dm755 shutdown-wrapper $pkgdir/usr/share/vdr/plugins/dbus2vdr/
+  install -Dm755 bin/vdr-dbus-send.sh $pkgdir/usr/bin/vdr-dbus-send
+  install -Dm755 etc/de.tvdr.vdr.conf $pkgdir/etc/dbus-1/system.d/de.tvdr.vdr.conf
+  rm -fr  $pkgdir/etc/init
+}
+
+# vim:set ts=2 sw=2 et:

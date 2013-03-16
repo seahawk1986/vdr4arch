@@ -1,0 +1,49 @@
+# Maintainer: Christopher Reimer <c[dot]reimer[at]googlemail[dot]com>
+pkgname=vdr-dvbapi-git
+_pkgname=vdr-dvbapi
+pkgver=20130303
+_gitver=b903b96e
+_vdrapi=1.7.41
+pkgrel=1
+pkgdesc="A bridge between VDR and OScam."
+url="https://github.com/manio/vdr-plugin-dvbapi"
+arch=('x86_64' 'i686')
+license=('GPL2')
+depends=('gcc-libs' 'oscam' "vdr-api=${_vdrapi}" "libdvbcsa" )
+_plugname=$(echo $pkgname | sed 's/vdr-//g')
+replaces=("vdr-plugin-$_plugname" "vdr-$_pkgname" "vdr-$_plugname")
+conflicts=("vdr-plugin-$_plugname" "vdr-$_pkgname" "vdr-$_plugname" )
+source=("fix-campt.diff")
+md5sums=('76d6922f22307496271dcefc47ed76d2')
+
+_gitroot=git://github.com/manio/vdr-plugin-dvbapi.git
+_gitname=vdr-plugin-dvbapi
+
+build() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+
+  if [[ -d "$_gitname" ]]; then
+    cd "$_gitname" && git pull origin
+    msg "The local files are updated."
+  else
+    git clone "$_gitroot" "$_gitname"
+  fi
+
+  msg "GIT checkout done or server timeout"
+  msg "create target dir"
+  mkdir -p $pkgdir/usr/lib/vdr/plugins
+  msg "Starting build..."
+
+  rm -rf "$srcdir/$_gitname-build"
+  git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build"
+  cd "$srcdir/$_gitname-build"
+  patch -p1 -i $srcdir/fix-campt.diff
+  make LIBDVBCSA=1
+}
+
+package() {
+  cd "$srcdir/$_gitname-build"*
+
+  make LIBDVBCSA=1 DESTDIR=${pkgdir} install
+}

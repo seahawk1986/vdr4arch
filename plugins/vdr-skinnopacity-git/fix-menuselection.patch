@@ -1,0 +1,17 @@
+--- skin-nopacity/displaymenu.c	2013-03-02 16:00:47.814448604 +0100
++++ b/displaymenu.c	2013-03-03 10:57:47.220963096 +0100
+@@ -572,9 +572,11 @@
+     } else {
+         //redraw item when switching through menu
+         cNopacityMenuItem *item = menuItems.Get(Index);
+-        item->SetTabs(strItems, tabItems, MaxTabs);
+-        item->SetCurrent(Current);
+-        item->Render();
++	if (item) {
++        	item->SetTabs(strItems, tabItems, MaxTabs);
++        	item->SetCurrent(Current);
++        	item->Render();
++	}
+     }
+     SetEditableWidth(menuView->GetEditableWidth());
+ }

@@ -22,6 +22,5 @@ int main(int argc, char *argv[]){
   chdir("/root");
   // Get root and execute shutdown.sh
   setuid(0);
-  execve(REAL_PATH, argv, envParms);
-  return 0;
+  return execve(REAL_PATH, argv, envParms);
 }

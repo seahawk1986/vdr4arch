@@ -1,0 +1,18 @@
+--- a/Makefile	2013-02-09 17:31:03.759869299 +0100
++++ b/Makefile	2013-02-09 18:34:35.882156121 +0100
+@@ -43,13 +43,13 @@
+ 
+ ### Includes and Defines (add further entries here):
+ 
+-INCLUDES += $(shell pkg-config --cflags-only-I Magick++)
++INCLUDES += $(shell pkg-config --cflags-only-I Magick++-Q16)
+ 
+ DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
+ DEFINES += -DMAGICKCORE_HDRI_ENABLE=0
+ DEFINES += -DMAGICKCORE_QUANTUM_DEPTH=16
+ 
+-LIBS += $(shell pkg-config --libs Magick++)
++LIBS += $(shell pkg-config --libs Magick++-Q16)
+ 
+ ### The object files (add further files here):
+ 

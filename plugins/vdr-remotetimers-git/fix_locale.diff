@@ -1,0 +1,34 @@
+--- a/Makefile	2012-06-06 23:18:33.000000000 +0200
++++ b/Makefile	2013-01-19 09:42:18.025753944 +0100
+@@ -32,9 +32,6 @@
+ 
+ APIVERSION = $(shell sed -ne '/define APIVERSION/s/^.*"\(.*\)".*$$/\1/p' $(VDRDIR)/config.h)
+ 
+-### Test whether VDR has locale support
+-VDRLOCALE = $(shell grep '^LOCALEDIR' $(VDRDIR)/Makefile)
+-
+ ### The name of the distribution archive:
+ 
+ ARCHIVE = $(PLUGIN)-$(VERSION)
+@@ -71,8 +68,6 @@
+ 
+ PODIR     = po
+ 
+-ifneq ($(strip $(VDRLOCALE)),)
+-
+ LOCALEDIR = $(VDRDIR)/locale
+ I18Npo    = $(wildcard $(PODIR)/*.po)
+ I18Nmsgs  = $(addprefix $(LOCALEDIR)/, $(addsuffix /LC_MESSAGES/vdr-$(PLUGIN).mo, $(notdir $(foreach file, $(I18Npo), $(basename $(file))))))
+@@ -94,12 +89,6 @@
+ 
+ i18n: $(I18Nmsgs)
+ 
+-else
+-
+-i18n:
+-	@### nothing to do
+-endif
+-
+ ### Targets:
+ 
+ libvdr-$(PLUGIN).so: $(OBJS)

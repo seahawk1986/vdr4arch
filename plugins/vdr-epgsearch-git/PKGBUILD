@@ -1,0 +1,42 @@
+# Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
+pkgname=vdr-epgsearch-git
+_pkgname=vdr-epgsearch
+pkgver=20130316
+_vdrapi=1.7.41
+pkgrel=2
+pkgdesc="Searchtimer and replacement of the VDR program menu"
+url="http://winni.vdr-developer.org/epgsearch"
+arch=('x86_64' 'i686')
+license=('GPL2')
+depends=('pcre' "vdr-api=${_vdrapi}")
+_plugname=$(echo $_pkgname | sed 's/vdr-//g')
+replaces=("vdr-plugin-$_plugname" "$_pkgname")
+conflicts=("vdr-plugin-$_plugname" "$_pkgname")
+source=()
+md5sum=('SKIP')
+
+_gitroot=git://projects.vdr-developer.org/vdr-plugin-epgsearch.git
+_gitname=vdr-plugin-epgsearch
+
+package() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+
+  if [[ -d "$_gitname" ]]; then
+    cd "$_gitname" && git pull origin
+    msg "The local files are updated."
+  else
+    git clone "$_gitroot" "$_gitname"
+  fi
+
+  msg "GIT checkout done or server timeout"
+  msg "create target dir"
+  mkdir -p $pkgdir/usr/lib/vdr/plugins
+  msg "Starting build..."
+
+  rm -rf "$srcdir/$_gitname-build"
+  git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build"
+  cd "$srcdir/$_gitname-build"
+  make
+  make DESTDIR=$pkgdir install
+}

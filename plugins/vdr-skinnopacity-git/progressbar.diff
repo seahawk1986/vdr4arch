@@ -1,0 +1,20 @@
+--- skin-nopacity/menuitem.c	2013-03-15 18:26:43.843601987 +0100
++++ b/menuitem.c	2013-03-16 16:52:47.917177693 +0100
+@@ -1111,7 +1111,7 @@
+     int colTextWidth = 0; 
+     for (int i=0; i<numTabs; i++) {
+         if (tabWidth[i] > 0) {
+-            if ((menuCat == mcScheduleNow)&&(CheckProgressBar(*itemTabs[i])))
++            if (CheckProgressBar(*itemTabs[i]))
+                 continue;
+             colWidth = tabWidth[i+cSkinDisplayMenu::MaxTabs];
+             colTextWidth = font->Width(*itemTabs[i]);
+@@ -1150,7 +1150,7 @@
+             if (selectable) {
+                 colWidth = tabWidth[i+cSkinDisplayMenu::MaxTabs];
+                 int posX = tabWidth[i];
+-                if ((menuCat == mcScheduleNow)&&(CheckProgressBar(*itemTabs[i]))) {
++                if (CheckProgressBar(*itemTabs[i])) {
+                         DrawProgressBar(posX, colWidth, *itemTabs[i], clrFont);
+                 } else if (i != scrollCol) {
+                     colTextWidth = font->Width(*itemTabs[i]);

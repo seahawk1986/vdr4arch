@@ -1,0 +1,25 @@
+# Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
+pkgname=vdr-svdrpservice
+pkgver=0.0.4
+_vdrapi=1.7.41
+pkgrel=1
+pkgdesc="offers SVDRP connections as a service to other plugins"
+url="http://vdr.schmirler.de/"
+arch=('x86_64' 'i686')
+license=('GPL2')
+depends=("vdr-api=${_vdrapi}")
+_plugname=$(echo $pkgname | sed 's/vdr-//g')
+replaces=("vdr-plugin-$_plugname")
+conflicts=("vdr-plugin-$_plugname")
+source=("http://vdr.schmirler.de/svdrpservice/$pkgname-$pkgver.tgz"
+	'http://vdr.schmirler.de/svdrpservice/Makefile-1.7.36')
+md5sums=('e98f773c8899dab9a67580adefe0386b'
+         '13ac584844c247f7724beecad71c8196')
+
+package() {
+  cd "${srcdir}/${_plugname}-${pkgver}"
+
+  cp $srcdir/Makefile-1.7.36 Makefile
+  make
+  make DESTDIR=$pkgdir install
+}

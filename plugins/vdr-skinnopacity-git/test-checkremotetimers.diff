@@ -1,0 +1,11 @@
+--- skin-nopacity/displaymenu.c	2013-02-17 14:44:14.169551643 +0100
++++ b/displaymenu.c	2013-02-21 11:26:02.071898390 +0100
+@@ -96,7 +96,7 @@
+     if (initial || ((menuCategoryLast!=mcMain)&&(MenuCategory()==mcMain)&&!timersDrawn)) {
+         if (timersChanged) {
+             //check if remotetimers plugin is available
+-            static cPlugin* pRemoteTimers = cPluginManager::CallFirstService("RemoteTimers::RefreshTimers-v1.0", NULL);
++	    static cPlugin* pRemoteTimers = cPluginManager::GetPlugin("remotetimers");
+             bool drawRemoteTimers = false;
+             cString errorMsg;
+             if (pRemoteTimers) {

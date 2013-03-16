@@ -1,0 +1,56 @@
+# Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
+pkgname=vdr-skinnopacity-git
+pkgver=20130316
+_pkgname=vdr-skinnopacity
+_vdrapi=1.7.41
+pkgrel=1
+pkgdesc="highly customizable native true color skin for the Video Disc Recorder"
+url="http://projects.vdr-developer.org/projects/skin-nopacity"
+arch=('x86_64' 'i686')
+license=('GPL2')
+depends=('imagemagick' 'libpng' "vdr-api=${_vdrapi}")
+install="$pkgname.install"
+_plugname=$(echo $pkgname | sed 's/vdr-//g')
+replaces=("vdr-plugin-$_plugname" "$_pkgname")
+conflicts=("vdr-plugin-$_plugname" "$_pkgname")
+makedepends=('git')
+source=('fix-Makefile.diff'
+        'test-checkremotetimers.diff'
+        'progressbar.diff'
+        )
+md5sums=('d3e2c4d4cae58188389fcddfe65143d3'
+         '9ed0c74fcd99f8b6e77736969d2695f4'
+         )
+
+_gitroot=git://projects.vdr-developer.org/skin-nopacity.git
+_gitname=skin-nopacity
+
+build() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+
+  if [[ -d "$_gitname" ]]; then
+    cd "$_gitname" && git pull origin
+    msg "The local files are updated."
+  else
+    git clone "$_gitroot" "$_gitname"
+  fi
+
+  msg "GIT checkout done or server timeout"
+  msg "Starting build..."
+
+  rm -rf "$srcdir/$_gitname-build"
+  git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build"
+  cd "$srcdir/$_gitname-build"
+  patch -p1 -i $srcdir/fix-Makefile.diff
+  patch -p1 -i $srcdir/progressbar.diff
+  make
+}
+
+package() {
+  cd "$srcdir/$_gitname-build"
+  make DESTDIR="$pkgdir/" install
+
+}
+
+# vim:set ts=2 sw=2 et:

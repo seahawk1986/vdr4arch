@@ -1,0 +1,51 @@
+# Maintainer: Alexander Grothe <alexander[dot]grothe[at]googlemail[dot]com>
+pkgname=vdr-softhddevice-git
+_pkgname=vdr-softhddevice
+pkgver=20130316
+_vdrapi=1.7.41
+pkgrel=1
+pkgdesc="software and GPU emulated HD output device plugin for VDR"
+url="http://projects.vdr-developer.org/projects/plg-softhddevice"
+arch=('x86_64' 'i686')
+license=('AGPL3')
+depends=('ffmpeg' 'libvdpau' "vdr-api=${_vdrapi}"  'xcb-util-wm')
+optdepends=('nvidia: Required for VDPAU acceleration')
+makedepends=('git' 'mesa' 'libxdamage' 'libxxf86vm' 'xcb-util' 'xcb-util-keysyms')
+_plugname=$(echo $pkgname | sed 's/vdr-//g')
+replaces=("vdr-plugin-$_plugname" "vdr-plugin-$_pkgname")
+conflicts=("vdr-plugin-$_plugname" "vdr-plugin-$_pkgname")
+source=( 'Makefile-config.diff')
+md5sums=('a2f13c565a1982d5e0c57c5ae99f8304')
+#md5sums=('SKIP') #generate with 'makepkg -g'
+options=(!strip)
+
+_gitroot=git://projects.vdr-developer.org/vdr-plugin-softhddevice.git
+_gitname=vdr-plugin-softhddevice
+
+package() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+
+  if [[ -d "$_gitname" ]]; then
+    cd "$_gitname" && git pull origin
+    msg "The local files are updated."
+  else
+    git clone "$_gitroot" "$_gitname"
+  fi
+
+  msg "GIT checkout done or server timeout"
+  msg "create target dir"
+  mkdir -p $pkgdir/usr/lib/vdr/plugins
+  msg "Starting build..."
+
+  rm -rf "$srcdir/$_gitname-build"
+  git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build"
+  cd "$srcdir/$_gitname-build"
+   sed -i 's/#-DDEBUG/-DDEBUG/g' Makefile
+   sed -i 's/#CONFIG\ \+=\ \-DUSE_MPEG_COMPLETE/#CONFIG\ \+=\ \-DUSE_MPEG_COMPLETE/g' Makefile
+   sed -i 's/-DAV_INFO //g' Makefile
+   #sed -i 's/#CONFIG\ \+=\ -DUSE_VDR_SPU/CONFIG\ \+=\ -DUSE_VDR_SPU/g' Makefile
+  patch -p1 -i $srcdir/Makefile-config.diff
+  make
+  make DESTDIR="$pkgdir" install
+}

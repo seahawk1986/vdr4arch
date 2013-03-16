@@ -1,0 +1,43 @@
+--- skinnopacity-git/displaymenu.c	2013-02-06 19:12:37.000000000 +0100
++++ skinnopacity-remotetimers/displaymenu.c	2013-02-07 15:14:09.000000000 +0100
+@@ -1,3 +1,10 @@
++#include "services/remotetimers.h"
++namespace PluginRemoteTimers {
++    static int CompareTimers(const void *a, const void *b) {
++        return (*(const cTimer **)a)->Compare(**(const cTimer **)b);
++    }
++}
++
+ #include "displaymenu.h"
+ #include <string>
+ 
+@@ -86,8 +93,28 @@ void cNopacityDisplayMenu::DrawTimers(bo
+     int maxTimersHeight = menuView->GetTimersMaxHeight();
+     if (initial || ((menuCategoryLast!=mcMain)&&(MenuCategory()==mcMain)&&!timersDrawn)) {
+         if (timersChanged) {
++            
++            static cPlugin* pRemoteTimers = cPluginManager::CallFirstService("RemoteTimers::RefreshTimers-v1.0", NULL);
++            bool drawRemoteTimers = false;
++            cString errorMsg;
++            if (pRemoteTimers) {
++                drawRemoteTimers = pRemoteTimers->Service("RemoteTimers::RefreshTimers-v1.0", &errorMsg);
++                esyslog("nopacity: RemoteTimers Plugin found, drawing remote timers: %d", drawRemoteTimers);
++            }
+             timers.Clear();
+-            cSortedTimers SortedTimers; 
++            cSortedTimers SortedTimers;
++            if (drawRemoteTimers) {
++                cTimer* remoteTimer = NULL;
++                esyslog("nopacity: Adding remote timers");
++                int numRemoteTimers = 0;
++                while (pRemoteTimers->Service("RemoteTimers::ForEach-v1.0", &remoteTimer) && remoteTimer != NULL) {
++                    SortedTimers.Append(remoteTimer);
++                    numRemoteTimers++;
++                }
++                esyslog("nopacity: Added %d remote timers", numRemoteTimers);
++                SortedTimers.Sort(PluginRemoteTimers::CompareTimers);
++            }
++            
+             int numTimers = SortedTimers.Size();
+             int currentHeight = menuView->GetTimersInitHeight();
+             if (numConflicts > 0) {

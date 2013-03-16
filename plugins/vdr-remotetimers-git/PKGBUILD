@@ -1,0 +1,31 @@
+# Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
+pkgname=vdr-remotetimers-git
+_pkgname=$(echo $pkgname | sed 's/-git$//g')
+pkgver=0.1.7
+_vdrapi=1.7.41
+pkgrel=8
+pkgdesc="add/edit/remove timers on both, the local (client) VDR and a remote (server) VDR"
+url="http://vdr.schmirler.de/"
+arch=('x86_64' 'i686')
+license=('GPL2')
+depends=("vdr-api=${_vdrapi}" 'vdr-svdrpservice')
+_plugname=$(echo $_pkgname | sed 's/vdr-//g')
+replaces=("vdr-plugin-$_plugname" "$_pkgname")
+conflicts=("vdr-plugin-$_plugname" "$_pkgname")
+source=("vdr-remotetimers-0.1.7-git.tgz"
+        "fix_locale.diff"
+	'Makefile-1.7.36'
+	'svdrpservice.h')
+md5sums=('00f16878d93dbd3c04ae69bb3312606b'
+         '8b12c33139568306d517a17077da62e9'
+         'bc1c54590630980ae8987f21f60b4cd3'
+         '9cfe5e76e88737ead0b6e0799954b46a')
+package() {
+  cd "${srcdir}/${_plugname}-${pkgver}-git"
+  cp  $srcdir/Makefile-1.7.36 Makefile
+  cp  $srcdir/svdrpservice.h svdrpservice.h
+  sed -i s/\#include.*svdrpservice\\/svdrpservice\.h.*/\#include\ \"svdrpservice\.h\"/g svdrp.h
+  mkdir -p $pkgdir/usr/lib/vdr/plugins
+  make
+  make DESTDIR=$pkgdir install
+}

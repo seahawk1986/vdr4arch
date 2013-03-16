@@ -1,0 +1,49 @@
+# Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
+pkgname=vdr-tvguide-git
+_pkgname=vdr-tvguide
+pkgver=20130316
+_vdrapi=1.7.41
+pkgrel=1
+pkgdesc="highly customizable 2D EPG viewer plugin."
+url="http://projects.vdr-developer.org/projects/plg-tvguide"
+arch=('x86_64' 'i686')
+license=('GPL2')
+depends=('imagemagick' "vdr-api=${_vdrapi}")
+install="$pkgname.install"
+_plugname=$(echo $_pkgname | sed 's/vdr-//g')
+replaces=("vdr-plugin-$_plugname" "$_pkgname")
+conflicts=("vdr-plugin-$_plugname" "$_pkgname")
+source=('fix-makefile.diff')
+md5sums=('b2a5011b064fc8559c6fdc443189a9ff')
+
+_gitroot=git://projects.vdr-developer.org/vdr-plugin-tvguide.git
+_gitname=vdr-plugin-tvguide
+
+build() {
+
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+
+  if [[ -d "$_gitname" ]]; then
+    cd "$_gitname" && git pull origin
+    msg "The local files are updated."
+  else
+    git clone "$_gitroot" "$_gitname"
+  fi
+
+  msg "GIT checkout done or server timeout"
+  msg "create target dir"
+  mkdir -p $pkgdir/usr/lib/vdr/plugins
+  msg "Starting build..."
+
+  rm -rf "$srcdir/$_gitname-build"
+  git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build"
+  cd "$srcdir/$_gitname-build"
+  #sed -i 's/--libs Magick++/--libs Magick++-Q16/g' Makefile
+  make
+}
+
+package() {
+  cd "$srcdir/$_gitname-build"
+  make DESTDIR=${pkgdir} install
+}

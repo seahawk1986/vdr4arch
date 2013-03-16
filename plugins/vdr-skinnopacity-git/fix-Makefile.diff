@@ -1,0 +1,21 @@
+--- a/Makefile  2013-02-07 10:28:09.933609938 +0100
++++ b/Makefile      2013-02-07 10:34:31.562845066 +0100
+@@ -33,6 +33,8 @@
+ ### Allow user defined options to overwrite defaults:
+
+ -include $(PLGCFG)
++ DEFINES += -DMAGICKCORE_HDRI_ENABLE=0 
++ DEFINES += -DMAGICKCORE_QUANTUM_DEPTH=16
+
+ ### The version number of VDR's plugin API:
+ APIVERSION = $(call PKGCFG,apiversion)
+@@ -52,7 +54,7 @@
+
+ DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
+
+-LIBS += $(shell pkg-config --libs Magick++)
++LIBS += $(shell pkg-config --libs Magick++-Q16)
+
+ ### The object files (add further files here):
+
+

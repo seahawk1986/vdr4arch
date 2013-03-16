@@ -1,4 +1,4 @@
-# Maintainer: Christopher Reimer <vdr4arch[at]creimer[dot]net>
+# Maintainer: Christopher Reimer <c[dot]reimer[at]googlemail[dot]com>
 pkgname=vdr
 pkgver=1.7.41
 pkgrel=1
@@ -8,7 +8,6 @@ arch=('x86_64' 'i686')
 license=('GPL2')
 depends=('libjpeg-turbo' 'perl' 'ttf-dejavu')
 optdepends=('lirc: remote control support'
-            'ncurses: skinncurses plugin'
             'runvdr-extreme: startscript for vdr')
 provides=("vdr-api=$pkgver")
 backup=('var/lib/vdr/channels.conf'
@@ -16,17 +15,38 @@ backup=('var/lib/vdr/channels.conf'
         'var/lib/vdr/keymacros.conf'
         'var/lib/vdr/scr.conf'
         'var/lib/vdr/sources.conf'
-        'var/lib/vdr/svdrphosts.conf')
-options='!emptydirs'
+        'var/lib/vdr/svdrphosts.conf'
+	'var/lib/vdr/lifeguard.conf')
+options=(!emptydirs)
 install='vdr.install'
 source=("ftp://ftp.tvdr.de/vdr/Developer/${pkgname}-${pkgver}.tar.bz2"
         'MainMenuHooks-v1_0_2.diff::http://www.vdr-portal.de/index.php?page=Attachment&attachmentID=30330'
         'shutdown.sh'
-        'shutdown-wrapper.c')
+        'lifeguard.conf'
+        'vdr-addon-lifeguard.1'
+        'shutdown-wrapper.c'
+	'remotetimers.h'
+        'vdr-1.7.29-skinlcars.patch'
+	'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.40-menuselection.patch.gz'
+	'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.40-resumereset.patch.gz'
+	'menuorg.diff'
+	'vdr-1.7.40-dynamite.patch'
+	'vdr-1.7.40-patch-for-permashift-0.5.1.patch'
+        )
+
 md5sums=('c7928bff45fa1c0e6dadf2c0a5adf94b'
          '301c9b9766ed5182b07f1debc79abc21'
-         'ef8e11062f58a9eb4016dfbf66bb9044'
-         '7cad811b4ac5ee6c0b5496d006f1e0ee')
+         '415c3f27b0d505edf382113abba238d3'
+         '0b7692a8e9017952c392b0a334226148'
+         '1e1a66cc6a6502a59555d37fd7c8f4d4'
+         '70ab46210425bcc2606c47cd6206f224'
+         '5a04f6caecd2426fe624ea74849bb54e'
+         '2fca23b247aa393bbb4b52e53a75581e'
+         '54ad9385c8d8c1c3241f5aa2068fd71b'
+         '4f9a88fbf46fc179df1a731ec33a8c32'
+         'b1c3fa683891c96e36b2357b3de2c244'
+         '6386c810adb20a96ee8d75c06042f13c'
+         'a282746efd4bbe5552d1f1e4598243eb')
 
 build() {
   gcc -o shutdown-wrapper shutdown-wrapper.c
@@ -34,21 +54,32 @@ build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
 
 cat > Make.config <<EOF
-CFLAGS      += -O3
-CXXFLAGS    += -O3
+CFLAGS      += -g -O3
+CXXFLAGS    += -g -O3
 PREFIX       = /usr
 LIBDIR       = /usr/lib/vdr/plugins
 VDR_USER     = vdr
 EOF
 
   patch -p1 -i ${srcdir}/MainMenuHooks-v1_0_2.diff
-
+  patch -p1 -i ${srcdir}/vdr-1.7.40-menuselection.patch
+  patch -p1 -i ${srcdir}/vdr-1.7.40-resumereset.patch
+  patch -p1 -i ${srcdir}/menuorg.diff
+  mkdir -p PLUGINS/src/remotetimers/
+  cp ${srcdir}/remotetimers.h PLUGINS/src/remotetimers/
+  patch -p1 -i ${srcdir}/vdr-1.7.29-skinlcars.patch
+  patch -p1 -i ${srcdir}/vdr-1.7.40-dynamite.patch
+  patch -p1 -i ${srcdir}/vdr-1.7.40-patch-for-permashift-0.5.1.patch
   make
 }
 
 package() {
   install -Dm754 shutdown-wrapper "$pkgdir/usr/lib/vdr/bin/shutdown-wrapper"
   install -Dm755 shutdown.sh "$pkgdir/usr/lib/vdr/bin/shutdown.sh"
+  mkdir -p "$pkgdir/var/lib/vdr/"
+  mkdir -p "$pkgdir/usr/share/man/man1/"
+  install -Dm644 lifeguard.conf  "$pkgdir/var/lib/vdr/"
+  install -Dm644 vdr-addon-lifeguard.1  "$pkgdir/usr/share/man/man1/"
 
   cd "${srcdir}/${pkgname}-${pkgver}"
 

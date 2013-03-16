@@ -1,0 +1,11 @@
+--- permashift/Makefile	2013-01-07 20:30:49.000000000 +0100
++++ b/Makefile	2013-03-14 14:52:57.690664982 +0100
+@@ -30,7 +30,7 @@
+ 
+ ### Make sure that necessary options are included:
+ 
+-include $(VDRDIR)/Make.global
++-include $(VDRDIR)/Make.global
+ 
+ ### Allow user defined options to overwrite defaults:
+ 

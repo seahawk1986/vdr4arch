@@ -1,0 +1,23 @@
+--- timers.c.orig	2013-02-13 19:18:59.000000000 +0100
++++ timers.c	2013-02-13 19:26:20.000000000 +0100
+@@ -65,6 +65,13 @@ void cNopacityTimer::CreateShowName(void
+     cString title("");
+     if (Event) {
+         title = Event->Title();
++    } else {
++        const char *File = Setup.FoldersInTimerMenu ? NULL : strrchr(timer->File(), FOLDERDELIMCHAR);
++        if (File && strcmp(File + 1, TIMERMACRO_TITLE) && strcmp(File + 1, TIMERMACRO_EPISODE))
++            File++;
++        else
++            File = timer->File();
++        title = File;
+     }
+     showName.Set(*title, font, width-10);
+ }
+@@ -154,4 +161,4 @@ void cNopacityTimer::DrawLogo(void) {
+             }   
+         }
+     }
+-}
+\ No newline at end of file
++}
