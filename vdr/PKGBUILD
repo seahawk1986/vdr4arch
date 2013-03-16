@@ -27,8 +27,8 @@ source=("ftp://ftp.tvdr.de/vdr/Developer/${pkgname}-${pkgver}.tar.bz2"
         'shutdown-wrapper.c'
 	'remotetimers.h'
         'vdr-1.7.29-skinlcars.patch'
-	'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.40-menuselection.patch.gz'
-	'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.40-resumereset.patch.gz'
+	'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.41-menuselection.patch.gz'
+	'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.41-resetresume.patch.gz'
 	'menuorg.diff'
 	'vdr-1.7.40-dynamite.patch'
 	'vdr-1.7.40-patch-for-permashift-0.5.1.patch'
@@ -42,8 +42,8 @@ md5sums=('c7928bff45fa1c0e6dadf2c0a5adf94b'
          '70ab46210425bcc2606c47cd6206f224'
          '5a04f6caecd2426fe624ea74849bb54e'
          '2fca23b247aa393bbb4b52e53a75581e'
-         '54ad9385c8d8c1c3241f5aa2068fd71b'
-         '4f9a88fbf46fc179df1a731ec33a8c32'
+         '0cf01dab7987ed9bddd2abda62894c38'
+         '5ce9d58f58addb1818d30d6c019830d1'
          'b1c3fa683891c96e36b2357b3de2c244'
          '6386c810adb20a96ee8d75c06042f13c'
          'a282746efd4bbe5552d1f1e4598243eb')
@@ -62,8 +62,8 @@ VDR_USER     = vdr
 EOF
 
   patch -p1 -i ${srcdir}/MainMenuHooks-v1_0_2.diff
-  patch -p1 -i ${srcdir}/vdr-1.7.40-menuselection.patch
-  patch -p1 -i ${srcdir}/vdr-1.7.40-resumereset.patch
+  patch -p1 -i ${srcdir}/vdr-1.7.41-menuselection.patch
+  patch -p1 -i ${srcdir}/vdr-1.7.41-resetresume.patch
   patch -p1 -i ${srcdir}/menuorg.diff
   mkdir -p PLUGINS/src/remotetimers/
   cp ${srcdir}/remotetimers.h PLUGINS/src/remotetimers/
