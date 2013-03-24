@@ -1,6 +1,6 @@
-# Maintainer: Christopher Reimer <c[dot]reimer[at]googlemail[dot]com>
+# Maintainer: Christopher Reimer <vdr4arch[at]creimer[dot]net>
 pkgname=vdr
-pkgver=1.7.41
+pkgver=1.7.42
 pkgrel=1
 pkgdesc="'open' digital satellite receiver and timer controlled video disk recorder"
 url="http://tvdr.de/"
@@ -8,16 +8,17 @@ arch=('x86_64' 'i686')
 license=('GPL2')
 depends=('libjpeg-turbo' 'perl' 'ttf-dejavu')
 optdepends=('lirc: remote control support'
+            'ncurses: skinncurses plugin'
             'runvdr-extreme: startscript for vdr')
-provides=("vdr-api=$pkgver")
+provides=("vdr-api=1.7.41")
 backup=('var/lib/vdr/channels.conf'
         'var/lib/vdr/diseqc.conf'
         'var/lib/vdr/keymacros.conf'
         'var/lib/vdr/scr.conf'
         'var/lib/vdr/sources.conf'
         'var/lib/vdr/svdrphosts.conf'
-	'var/lib/vdr/lifeguard.conf')
-options=(!emptydirs)
+        'var/lib/vdr/lifeguard.conf')
+options='!emptydirs'
 install='vdr.install'
 source=("ftp://ftp.tvdr.de/vdr/Developer/${pkgname}-${pkgver}.tar.bz2"
         'MainMenuHooks-v1_0_2.diff::http://www.vdr-portal.de/index.php?page=Attachment&attachmentID=30330'
@@ -25,16 +26,17 @@ source=("ftp://ftp.tvdr.de/vdr/Developer/${pkgname}-${pkgver}.tar.bz2"
         'lifeguard.conf'
         'vdr-addon-lifeguard.1'
         'shutdown-wrapper.c'
-	'remotetimers.h'
+        'remotetimers.h'
         'vdr-1.7.29-skinlcars.patch'
-	'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.41-menuselection.patch.gz'
-	'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.41-resetresume.patch.gz'
-	'menuorg.diff'
-	'vdr-1.7.40-dynamite.patch'
-	'vdr-1.7.40-patch-for-permashift-0.5.1.patch'
+        'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.42-menuselection.patch.gz'
+        'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.42-resetresume.patch.gz'
+        'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.42-filetransfer.patch.gz'
+        'menuorg.diff'
+        'vdr-1.7.40-dynamite.patch'
+        'vdr-1.7.40-patch-for-permashift-0.5.1.patch'
         )
 
-md5sums=('c7928bff45fa1c0e6dadf2c0a5adf94b'
+md5sums=('5a9ec132781045061325162fe03c2763'
          '301c9b9766ed5182b07f1debc79abc21'
          '415c3f27b0d505edf382113abba238d3'
          '0b7692a8e9017952c392b0a334226148'
@@ -42,8 +44,9 @@ md5sums=('c7928bff45fa1c0e6dadf2c0a5adf94b'
          '70ab46210425bcc2606c47cd6206f224'
          '5a04f6caecd2426fe624ea74849bb54e'
          '2fca23b247aa393bbb4b52e53a75581e'
-         '0cf01dab7987ed9bddd2abda62894c38'
-         '5ce9d58f58addb1818d30d6c019830d1'
+         'f85805d3d1ab2870e994f1e1de245560'
+         'a330d87a2035d4c57013a437da77196b'
+         'f97426a09f4441fc60fc010cc9ba1b5c'
          'b1c3fa683891c96e36b2357b3de2c244'
          '6386c810adb20a96ee8d75c06042f13c'
          'a282746efd4bbe5552d1f1e4598243eb')
@@ -62,8 +65,9 @@ VDR_USER     = vdr
 EOF
 
   patch -p1 -i ${srcdir}/MainMenuHooks-v1_0_2.diff
-  patch -p1 -i ${srcdir}/vdr-1.7.41-menuselection.patch
-  patch -p1 -i ${srcdir}/vdr-1.7.41-resetresume.patch
+  patch -p1 -i ${srcdir}/vdr-1.7.42-menuselection.patch
+  patch -p1 -i ${srcdir}/vdr-1.7.42-resetresume.patch
+  patch -p1 -i ${srcdir}/vdr-1.7.42-filetransfer.patch
   patch -p1 -i ${srcdir}/menuorg.diff
   mkdir -p PLUGINS/src/remotetimers/
   cp ${srcdir}/remotetimers.h PLUGINS/src/remotetimers/
@@ -85,3 +89,4 @@ package() {
 
   make DESTDIR="${pkgdir}" install
 }
+
