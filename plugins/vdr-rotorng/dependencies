@@ -1,0 +1,67 @@
+rotorng.o: rotorng.c /usr/include/vdr/config.h \
+ /usr/include/vdr/i18n.h /usr/include/vdr/tools.h \
+ /usr/include/vdr/font.h \
+ /usr/include/vdr/diseqc.h \
+ /usr/include/vdr/config.h \
+ /usr/include/vdr/thread.h \
+ /usr/include/vdr/plugin.h \
+ /usr/include/vdr/menuitems.h \
+ /usr/include/vdr/dvbdevice.h \
+ /usr/include/vdr/device.h \
+ /usr/include/vdr/channels.h \
+ /usr/include/vdr/sources.h /usr/include/vdr/ci.h \
+ /usr/include/vdr/dvbsubtitle.h \
+ /usr/include/vdr/osd.h /usr/include/vdr/eit.h \
+ /usr/include/vdr/filter.h /usr/include/vdr/nit.h \
+ /usr/include/vdr/pat.h /usr/include/vdr/remux.h \
+ /usr/include/vdr/ringbuffer.h \
+ /usr/include/vdr/sdt.h \
+ /usr/include/vdr/sections.h \
+ /usr/include/vdr/spu.h \
+ /usr/include/vdr/osdbase.h \
+ /usr/include/vdr/skins.h /usr/include/vdr/epg.h \
+ /usr/include/vdr/libsi/section.h \
+ /usr/include/vdr/libsi/si.h \
+ /usr/include/vdr/libsi/util.h \
+ /usr/include/vdr/libsi/headers.h \
+ /usr/include/vdr/keys.h \
+ /usr/include/vdr/recording.h \
+ /usr/include/vdr/timers.h \
+ /usr/include/vdr/themes.h \
+ /usr/include/vdr/sources.h \
+ /usr/include/vdr/menuitems.h \
+ /usr/include/vdr/dvbdevice.h \
+ /usr/include/vdr/device.h \
+ /usr/include/vdr/channels.h \
+ /usr/include/vdr/status.h \
+ /usr/include/vdr/player.h \
+ /usr/include/vdr/plugin.h \
+ /usr/include/vdr/interface.h \
+ /usr/include/vdr/remote.h \
+ /usr/include/vdr/svdrp.h /usr/include/vdr/osd.h \
+ /usr/include/vdr/pat.h scanner.h \
+ /usr/include/libsi/section.h \
+ /usr/include/libsi/descriptor.h \
+ /usr/include/libsi/si.h \
+ /usr/include/libsi/headers.h rotorng.h
+scanner.o: scanner.c scanner.h /usr/include/libsi/section.h \
+ /usr/include/libsi/si.h \
+ /usr/include/libsi/util.h \
+ /usr/include/libsi/headers.h \
+ /usr/include/libsi/descriptor.h \
+ /usr/include/vdr/dvbdevice.h \
+ /usr/include/vdr/device.h \
+ /usr/include/vdr/channels.h \
+ /usr/include/vdr/config.h \
+ /usr/include/vdr/i18n.h /usr/include/vdr/tools.h \
+ /usr/include/vdr/font.h \
+ /usr/include/vdr/sources.h \
+ /usr/include/vdr/thread.h /usr/include/vdr/ci.h \
+ /usr/include/vdr/dvbsubtitle.h \
+ /usr/include/vdr/osd.h /usr/include/vdr/eit.h \
+ /usr/include/vdr/filter.h /usr/include/vdr/nit.h \
+ /usr/include/vdr/pat.h /usr/include/vdr/remux.h \
+ /usr/include/vdr/ringbuffer.h \
+ /usr/include/vdr/sdt.h \
+ /usr/include/vdr/sections.h \
+ /usr/include/vdr/spu.h
