@@ -14,7 +14,8 @@ conflicts=("vdr-plugin-$_plugname")
 source=("https://launchpad.net/~yavdr/+archive/unstable-vdr/+files/vdr-plugin-rotorng_0.3.1.orig.tar.gz" "review.diff" "dependencies" "fix-makefile.diff")
 md5sums=('7272c243c92995c521b8ca6712f42115'
          'b3e87eb006133f925ffc11d31c022894'
-         '51ce8990df78786881b08872ea80de81')
+         '51ce8990df78786881b08872ea80de81'
+         '50ce98f3f8516659876ba86fd729acfd')
 
 package() {
   cd "${srcdir}/${_plugname}-${pkgver}"
