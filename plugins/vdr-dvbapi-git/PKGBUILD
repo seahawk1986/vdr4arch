@@ -1,9 +1,9 @@
 # Maintainer: Christopher Reimer <c[dot]reimer[at]googlemail[dot]com>
 pkgname=vdr-dvbapi-git
 _pkgname=vdr-dvbapi
-pkgver=20130303
+pkgver=20130402
 _gitver=b903b96e
-_vdrapi=1.7.41
+_vdrapi=2.0.0
 pkgrel=1
 pkgdesc="A bridge between VDR and OScam."
 url="https://github.com/manio/vdr-plugin-dvbapi"

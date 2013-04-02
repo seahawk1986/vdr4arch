@@ -17,22 +17,20 @@ backup=("var/lib/vdr/plugins/vnsiserver/allowed_hosts.conf")
 source=()
 md5sums=('SKIP')
 
-_gitroot=git://github.com/opdenkamp/xbmc-pvr-addons.git
+_gitroot=git://github.com/FernetMenta/xbmc-pvr-addons.git
 _gitname=xbmc-pvr-addons
-
+_gitbranch=vnsi4
 
 package() {
   cd "$srcdir"
   msg "Connecting to GIT server...."
 
-  if [[ -d "$_gitname" ]]; then
-    cd "$_gitname" && git pull origin
+  if [ -d $_gitname ] ; then
+    cd $_gitname && git pull origin
     msg "The local files are updated."
   else
-    git clone "$_gitroot" "$_gitname"
+    git clone -b ${_gitbranch} --single-branch $_gitroot $_gitname
   fi
-
-  msg "GIT checkout done or server timeout"
   msg "create target dir"
   mkdir -p $pkgdir/usr/lib/vdr/plugins
   msg "Starting build..."
@@ -42,8 +40,9 @@ package() {
   cd "$srcdir/$_gitname-build/addons/pvr.vdr.vnsi/vdr-plugin-${_plugname}"
 
   mkdir -p $pkgdir/usr/lib/vdr/plugins
+  sed -i "s/10725)/10725/" streamer.c
   make
   make DESTDIR=$pkgdir install
   mkdir -p $pkgdir/var/lib/vdr/plugins/vnsiserver/
-  install -Dm755 vnsiserver/* $pkgdir/var/lib/vdr/plugins/vnsiserver
+  install -Dm755 vnsiserver/* $pkgdir/var/lib/vdr/plugins/vnsiserver4
 }

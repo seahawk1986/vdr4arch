@@ -1,0 +1,19 @@
+--- skin-nopacity/Makefile	2013-03-20 19:45:36.969040630 +0100
++++ b/Makefile	2013-03-20 19:53:54.912563312 +0100
+@@ -48,13 +48,11 @@ SOFILE = libvdr-$(PLUGIN).so
+ 
+ ### Includes and Defines and Dependencies (add further entries here):
+ 
+-INCLUDES += $(shell pkg-config --cflags-only-I Magick++)
++INCLUDES += $(shell pkg-config --cflags Magick++ 2>/dev/null)
+ 
+-DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
+-DEFINES += -DMAGICKCORE_HDRI_ENABLE=0
+-DEFINES += -DMAGICKCORE_QUANTUM_DEPTH=16
++DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
+ 
+-LIBS += $(shell pkg-config --libs Magick++)
++LIBS += $(shell pkg-config --libs Magick++ 2>/dev/null)
+ 
+ ### The object files (add further files here):
+ 

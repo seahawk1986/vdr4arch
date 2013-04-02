@@ -1,9 +1,9 @@
 # Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
 pkgname=vdr-epgsearch-git
 _pkgname=vdr-epgsearch
-pkgver=20130316
-_vdrapi=1.7.41
-pkgrel=2
+pkgver=20130402
+_vdrapi=2.0.0
+pkgrel=1
 pkgdesc="Searchtimer and replacement of the VDR program menu"
 url="http://winni.vdr-developer.org/epgsearch"
 arch=('x86_64' 'i686')
@@ -12,8 +12,8 @@ depends=('pcre' "vdr-api=${_vdrapi}")
 _plugname=$(echo $_pkgname | sed 's/vdr-//g')
 replaces=("vdr-plugin-$_plugname" "$_pkgname")
 conflicts=("vdr-plugin-$_plugname" "$_pkgname")
-source=()
 md5sum=('SKIP')
+
 
 _gitroot=git://projects.vdr-developer.org/vdr-plugin-epgsearch.git
 _gitname=vdr-plugin-epgsearch

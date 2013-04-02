@@ -1,8 +1,8 @@
 # Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
 pkgname=vdr-skinnopacity-git
-pkgver=20130316
+pkgver=20130402
 _pkgname=vdr-skinnopacity
-_vdrapi=1.7.41
+_vdrapi=2.0.0
 pkgrel=1
 pkgdesc="highly customizable native true color skin for the Video Disc Recorder"
 url="http://projects.vdr-developer.org/projects/skin-nopacity"
@@ -14,13 +14,8 @@ _plugname=$(echo $pkgname | sed 's/vdr-//g')
 replaces=("vdr-plugin-$_plugname" "$_pkgname")
 conflicts=("vdr-plugin-$_plugname" "$_pkgname")
 makedepends=('git')
-source=('fix-Makefile.diff'
-        'test-checkremotetimers.diff'
-        'progressbar.diff'
-        )
-md5sums=('d3e2c4d4cae58188389fcddfe65143d3'
-         '9ed0c74fcd99f8b6e77736969d2695f4'
-         )
+source=('fix-Makefile2.diff')
+md5sums=('3cbd47516fc88261c0d01ead96b5a96e')
 
 _gitroot=git://projects.vdr-developer.org/skin-nopacity.git
 _gitname=skin-nopacity
@@ -42,8 +37,7 @@ build() {
   rm -rf "$srcdir/$_gitname-build"
   git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build"
   cd "$srcdir/$_gitname-build"
-  patch -p1 -i $srcdir/fix-Makefile.diff
-  patch -p1 -i $srcdir/progressbar.diff
+  patch -p1 -i $srcdir/fix-Makefile2.diff
   make
 }
 

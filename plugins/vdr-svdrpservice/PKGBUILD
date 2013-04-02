@@ -1,7 +1,7 @@
 # Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
 pkgname=vdr-svdrpservice
 pkgver=0.0.4
-_vdrapi=1.7.41
+_vdrapi=2.0.0
 pkgrel=1
 pkgdesc="offers SVDRP connections as a service to other plugins"
 url="http://vdr.schmirler.de/"

@@ -10,7 +10,7 @@
 pkgname=vdr-dbus2vdr-git
 pkgver=20130316
 _pkgname=vdr-dbus2vdr
-_vdrapi=1.7.41
+_vdrapi=2.0.0
 pkgrel=1
 pkgdesc="dbus control interface for the VDR"
 url="https://github.com/flensrocker/vdr-plugin-dbus2vdr"

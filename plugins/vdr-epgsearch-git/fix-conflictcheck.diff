@@ -1,0 +1,20 @@
+--- vdr-plugin-epgsearch/menu_conflictcheck.c	2013-03-10 18:45:49.228097549 +0100
++++ b/menu_conflictcheck.c	2013-03-23 10:24:11.938655526 +0100
+@@ -63,7 +63,7 @@ cMenuConflictCheck::cMenuConflictCheck()
+ :cOsdMenu("", 4, 12, 4, 5, 30)
+ {
+ #if VDRVERSNUM >= 10728
+-  SetMenuCategory(mcSchedule);
++  SetMenuCategory(mcTimerEdit);
+ #endif
+     showAll = false;
+     lastSel = -1;
+@@ -198,7 +198,7 @@ cMenuConflictCheckDetails::cMenuConflict
+ :cOsdMenu(tr("Timer conflicts"), 2, 4, 13, 3, 2)
+ {
+ #if VDRVERSNUM >= 10728
+-  SetMenuCategory(mcSchedule);
++  SetMenuCategory(mcTimerEdit);
+ #endif
+     timerObj = TimerObj;
+     checktime = timerObj->conflCheckTime;

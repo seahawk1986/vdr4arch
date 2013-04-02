@@ -1,8 +1,8 @@
 # Maintainer: Alexander Grothe <alexander[dot]grothe[at]googlemail[dot]com>
 pkgname=vdr-softhddevice-git
 _pkgname=vdr-softhddevice
-pkgver=20130316
-_vdrapi=1.7.41
+pkgver=20130402
+_vdrapi=2.0.0
 pkgrel=1
 pkgdesc="software and GPU emulated HD output device plugin for VDR"
 url="http://projects.vdr-developer.org/projects/plg-softhddevice"
@@ -14,8 +14,9 @@ makedepends=('git' 'mesa' 'libxdamage' 'libxxf86vm' 'xcb-util' 'xcb-util-keysyms
 _plugname=$(echo $pkgname | sed 's/vdr-//g')
 replaces=("vdr-plugin-$_plugname" "vdr-plugin-$_pkgname")
 conflicts=("vdr-plugin-$_plugname" "vdr-plugin-$_pkgname")
-source=( 'Makefile-config.diff')
-md5sums=('a2f13c565a1982d5e0c57c5ae99f8304')
+source=( 'Makefile-config.diff' 'ffmpeg-1.2.diff')
+md5sums=('a2f13c565a1982d5e0c57c5ae99f8304'
+         '6126e3cb37826881f10d066e2aea35ba')
 #md5sums=('SKIP') #generate with 'makepkg -g'
 options=(!strip)
 
@@ -46,6 +47,7 @@ package() {
    sed -i 's/-DAV_INFO //g' Makefile
    #sed -i 's/#CONFIG\ \+=\ -DUSE_VDR_SPU/CONFIG\ \+=\ -DUSE_VDR_SPU/g' Makefile
   patch -p1 -i $srcdir/Makefile-config.diff
+  patch -p1 -i $srcdir/ffmpeg-1.2.diff
   make
   make DESTDIR="$pkgdir" install
 }

@@ -8,9 +8,9 @@
 
 # Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
 pkgname=vdr-uactivity-git
-pkgver=20130316
+pkgver=20130402
 _pkgname=vdr-uactivity
-_vdrapi=1.7.41
+_vdrapi=2.0.0
 pkgrel=1
 pkgdesc="activity signals for the Video Disc Recorder"
 url="http://projects.vdr-developer.org/projects/plg-uactivity"

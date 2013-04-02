@@ -2,7 +2,7 @@
 pkgname=vdr-menuorg
 pkgver=20120205
 _gitver=0.4.5
-_vdrapi=1.7.41
+_vdrapi=2.0.0
 pkgrel=3
 pkgdesc="Adds the possibility to reorganize vdr menu"
 url=""

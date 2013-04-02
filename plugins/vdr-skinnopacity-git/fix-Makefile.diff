@@ -14,7 +14,7 @@
  DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 
 -LIBS += $(shell pkg-config --libs Magick++)
-+LIBS += $(shell pkg-config --libs Magick++-Q16)
++LIBS += $(shell pkg-config --libs Magick++-6.Q16)
 
  ### The object files (add further files here):
 

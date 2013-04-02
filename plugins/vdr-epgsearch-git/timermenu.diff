@@ -1,0 +1,14 @@
+--- menu_dirselect.c.orig	2013-03-19 18:53:06.000000000 +0100
++++ menu_dirselect.c	2013-03-19 18:56:14.000000000 +0100
+@@ -64,8 +64,8 @@ int cMenuDirItem::Compare(const cListObj
+ cMenuDirSelect::cMenuDirSelect(char* szDirectory)
+     :cOsdMenu(tr("Select directory"))
+ {
+-#if VDRVERSNUM >= 10728
+-  SetMenuCategory(mcTimer);
++#if VDRVERSNUM >= 10733
++  SetMenuCategory(mcTimerEdit);
+ #endif
+ 
+     Directory = szDirectory;
+

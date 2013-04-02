@@ -1,8 +1,8 @@
 # Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
 pkgname=vdr-tvguide-git
 _pkgname=vdr-tvguide
-pkgver=20130316
-_vdrapi=1.7.41
+pkgver=20130402
+_vdrapi=2.0.0
 pkgrel=1
 pkgdesc="highly customizable 2D EPG viewer plugin."
 url="http://projects.vdr-developer.org/projects/plg-tvguide"
@@ -39,7 +39,6 @@ build() {
   rm -rf "$srcdir/$_gitname-build"
   git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build"
   cd "$srcdir/$_gitname-build"
-  #sed -i 's/--libs Magick++/--libs Magick++-Q16/g' Makefile
   make
 }
 

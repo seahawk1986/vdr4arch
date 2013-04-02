@@ -1,9 +1,9 @@
 # Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
 pkgname=vdr-xvdr-git
 _pkgname=vdr-xvdr
-pkgver=20130316
+pkgver=20130402
 #_gitver=cae425bd
-_vdrapi=1.7.41
+_vdrapi=2.0.0
 pkgrel=1
 pkgdesc=""
 url=""

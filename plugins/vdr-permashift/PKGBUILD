@@ -1,7 +1,7 @@
 # Maintainer: Christopher Reimer <c[dot]reimer[at]googlemail[dot]com>
 pkgname=vdr-permashift
 pkgver=0.5.1
-_vdrapi=1.7.41
+_vdrapi=2.0.0
 pkgrel=4
 pkgdesc="Permanent timeshift plugin"
 url="http://ein-eike.de/vdr-plugin-permashift/"

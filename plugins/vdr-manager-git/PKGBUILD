@@ -8,9 +8,9 @@
 
 # Maintainer: Alexander Grothe <seahawk1986[at]hotmail[dot]com>
 pkgname=vdr-vdrmanager-git
-pkgver=20130316
+pkgver=20130402
 _pkgname=vdr-vdrmanager
-_vdrapi=1.7.41
+_vdrapi=2.0.0
 pkgrel=1
 pkgdesc="API for android client VDR Manager"
 url="http://projects.vdr-developer.org/projects/vdr-manager"

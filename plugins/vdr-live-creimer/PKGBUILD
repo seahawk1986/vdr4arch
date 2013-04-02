@@ -2,7 +2,7 @@
 pkgname=vdr-live
 pkgver=20121226
 _gitver=545739fe
-_vdrapi=1.7.41
+_vdrapi=2.0.0
 pkgrel=7
 pkgdesc="Adds the possibility to control VDR and some of it's plugins by a web interface."
 url="http://projects.vdr-developer.org/projects/plg-live"

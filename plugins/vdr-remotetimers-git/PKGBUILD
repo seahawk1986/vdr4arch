@@ -2,7 +2,7 @@
 pkgname=vdr-remotetimers-git
 _pkgname=$(echo $pkgname | sed 's/-git$//g')
 pkgver=0.1.7
-_vdrapi=1.7.41
+_vdrapi=2.0.0
 pkgrel=8
 pkgdesc="add/edit/remove timers on both, the local (client) VDR and a remote (server) VDR"
 url="http://vdr.schmirler.de/"
