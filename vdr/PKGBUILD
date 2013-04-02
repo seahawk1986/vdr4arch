@@ -1,6 +1,6 @@
 # Maintainer: Christopher Reimer <vdr4arch[at]creimer[dot]net>
 pkgname=vdr
-pkgver=1.7.42
+pkgver=2.0.0
 pkgrel=1
 pkgdesc="'open' digital satellite receiver and timer controlled video disk recorder"
 url="http://tvdr.de/"
@@ -10,7 +10,7 @@ depends=('libjpeg-turbo' 'perl' 'ttf-dejavu')
 optdepends=('lirc: remote control support'
             'ncurses: skinncurses plugin'
             'runvdr-extreme: startscript for vdr')
-provides=("vdr-api=1.7.41")
+provides=("vdr-api=2.0.0")
 backup=('var/lib/vdr/channels.conf'
         'var/lib/vdr/diseqc.conf'
         'var/lib/vdr/keymacros.conf'
@@ -20,7 +20,7 @@ backup=('var/lib/vdr/channels.conf'
         'var/lib/vdr/lifeguard.conf')
 options='!emptydirs'
 install='vdr.install'
-source=("ftp://ftp.tvdr.de/vdr/Developer/${pkgname}-${pkgver}.tar.bz2"
+source=("ftp://ftp.tvdr.de/vdr/${pkgname}-${pkgver}.tar.bz2"
         'MainMenuHooks-v1_0_2.diff::http://www.vdr-portal.de/index.php?page=Attachment&attachmentID=30330'
         'shutdown.sh'
         'lifeguard.conf'
