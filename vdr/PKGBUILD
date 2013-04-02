@@ -1,4 +1,4 @@
-# Maintainer: Christopher Reimer <vdr4arch[at]creimer[dot]net>
+#Maintainer: Christopher Reimer <c[dot]reimer[at]googlemail[dot]com>
 pkgname=vdr
 pkgver=2.0.0
 pkgrel=1
@@ -7,8 +7,9 @@ url="http://tvdr.de/"
 arch=('x86_64' 'i686')
 license=('GPL2')
 depends=('libjpeg-turbo' 'perl' 'ttf-dejavu')
-optdepends=('lirc: remote control support'
-            'ncurses: skinncurses plugin'
+optdepends=('netstat-nat: check IP connections for lifeguard-shutdown-script'
+            'vdr-dbus2vdr: display shutdown-messages'
+            'lirc: remote control support'
             'runvdr-extreme: startscript for vdr')
 provides=("vdr-api=2.0.0")
 backup=('var/lib/vdr/channels.conf'
@@ -17,39 +18,39 @@ backup=('var/lib/vdr/channels.conf'
         'var/lib/vdr/scr.conf'
         'var/lib/vdr/sources.conf'
         'var/lib/vdr/svdrphosts.conf'
-        'var/lib/vdr/lifeguard.conf')
-options='!emptydirs'
+	'var/lib/vdr/lifeguard.conf')
+options=(!emptydirs)
 install='vdr.install'
-source=("ftp://ftp.tvdr.de/vdr/${pkgname}-${pkgver}.tar.bz2"
+source=("ftp://ftp.tvdr.de/vdr/Developer/${pkgname}-${pkgver}.tar.bz2"
         'MainMenuHooks-v1_0_2.diff::http://www.vdr-portal.de/index.php?page=Attachment&attachmentID=30330'
         'shutdown.sh'
         'lifeguard.conf'
         'vdr-addon-lifeguard.1'
         'shutdown-wrapper.c'
-        'remotetimers.h'
+	'remotetimers.h'
         'vdr-1.7.29-skinlcars.patch'
-        'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.42-menuselection.patch.gz'
-        'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.42-resetresume.patch.gz'
-        'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-1.7.42-filetransfer.patch.gz'
-        'menuorg.diff'
-        'vdr-1.7.40-dynamite.patch'
-        'vdr-1.7.40-patch-for-permashift-0.5.1.patch'
+	'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-2.0.0-menuselection.patch.gz'
+	'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-2.0.0-resetresume.patch.gz'
+        'http://www.saunalahti.fi/~rahrenbe/vdr/patches/vdr-2.0.0-filetransfer.patch.gz'
+	'menuorg.diff'
+	'vdr-1.7.40-dynamite.patch'
+	'http://ein-eike.de/wordpress/wp-content/uploads/2013/03/vdr-patch-for-permashift-0.5.2.patch'
         )
 
-md5sums=('5a9ec132781045061325162fe03c2763'
+md5sums=('fd7f481b996e03fae3c00e80b6b0d301'
          '301c9b9766ed5182b07f1debc79abc21'
-         '415c3f27b0d505edf382113abba238d3'
+         '5dc29e2434c0353a3ebf2d5eb663527a'
          '0b7692a8e9017952c392b0a334226148'
          '1e1a66cc6a6502a59555d37fd7c8f4d4'
          '70ab46210425bcc2606c47cd6206f224'
          '5a04f6caecd2426fe624ea74849bb54e'
          '2fca23b247aa393bbb4b52e53a75581e'
-         'f85805d3d1ab2870e994f1e1de245560'
-         'a330d87a2035d4c57013a437da77196b'
-         'f97426a09f4441fc60fc010cc9ba1b5c'
+         'e85a6fd72edbe5beb83a3c8ba08a6b2d'
+         'fafa37f7cc013f86c92443ced9405e40'
+         '61a17c00e0794084627244d4a7aaa5b4'
          'b1c3fa683891c96e36b2357b3de2c244'
          '6386c810adb20a96ee8d75c06042f13c'
-         'a282746efd4bbe5552d1f1e4598243eb')
+         '8ab77b6b4463f8c359c3ba29336a0e96')
 
 build() {
   gcc -o shutdown-wrapper shutdown-wrapper.c
@@ -65,15 +66,14 @@ VDR_USER     = vdr
 EOF
 
   patch -p1 -i ${srcdir}/MainMenuHooks-v1_0_2.diff
-  patch -p1 -i ${srcdir}/vdr-1.7.42-menuselection.patch
-  patch -p1 -i ${srcdir}/vdr-1.7.42-resetresume.patch
-  patch -p1 -i ${srcdir}/vdr-1.7.42-filetransfer.patch
+  patch -p1 -i ${srcdir}/vdr-2.0.0-menuselection.patch
+  patch -p1 -i ${srcdir}/vdr-2.0.0-resetresume.patch
   patch -p1 -i ${srcdir}/menuorg.diff
   mkdir -p PLUGINS/src/remotetimers/
   cp ${srcdir}/remotetimers.h PLUGINS/src/remotetimers/
   patch -p1 -i ${srcdir}/vdr-1.7.29-skinlcars.patch
   patch -p1 -i ${srcdir}/vdr-1.7.40-dynamite.patch
-  patch -p1 -i ${srcdir}/vdr-1.7.40-patch-for-permashift-0.5.1.patch
+  patch -p1 -i ${srcdir}/vdr-patch-for-permashift-0.5.2.patch
   make
 }
 
@@ -89,4 +89,3 @@ package() {
 
   make DESTDIR="${pkgdir}" install
 }
-

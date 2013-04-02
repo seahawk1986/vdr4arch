@@ -131,6 +131,7 @@ if [ "$REASON" ]; then
 	# add an explanation to syslog that includes the reason
 #	logger -t "$DESC" "$MESSAGE"
 	echo "ABORT_MESSAGE=\"$MESSAGE\""
+        /usr/bin/vdr-dbus-send /Skin skin.QueueMessage string:"Shutdown inhibited by $MESSAGE"
 	exit 1
 fi
 
