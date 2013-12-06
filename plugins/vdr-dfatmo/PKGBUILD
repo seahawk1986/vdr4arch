@@ -4,12 +4,12 @@ pkgbase=DFAtmo
 pkgname=('dfatmo' 'vdr-dfatmo' 'xbmc-addon-dfatmo')
 pkgver=0.3.4
 _vdrapi=2.0.0
-pkgrel=4
+pkgrel=5
 epoch=1
 url="https://github.com/durchflieger/${pkgbase}"
 arch=('x86_64' 'i686')
 license=('GPL2')
-makedepends=('python2' "vdr-api=${_vdrapi}" 'zip')
+makedepends=('libusbx' 'python2' "vdr-api=${_vdrapi}" 'zip')
 source=("https://github.com/durchflieger/${pkgbase}/archive/v${pkgver}.tar.gz"
         '45-df10ch.rules')
 md5sums=('f219c14904b800303565be29a607c52d'
@@ -18,6 +18,7 @@ md5sums=('f219c14904b800303565be29a607c52d'
 prepare() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
   sed -i "s/python-config/python2-config/" Makefile
+  sed -i 's/static const char \*libusb/const char \*libusb/g' df10choutputdriver.c
 }
 
 build() {
@@ -44,7 +45,7 @@ package_dfatmo() {
 
 package_vdr-dfatmo() {
   pkgdesc="VDR plugin to drive a colored back lighting for TVs"
-  depends=('dfatmo' 'gcc-libs' "vdr-api=${_vdrapi}")
+  depends=('dfatmo' "vdr-api=${_vdrapi}")
 
   cd "${srcdir}/${pkgbase}-${pkgver}"
   make VDRDESTDIR="${pkgdir}" vdrinstall
@@ -53,7 +54,7 @@ package_vdr-dfatmo() {
 
 package_xbmc-addon-dfatmo() {
   pkgdesc="VDR plugin to drive a colored back lighting for TVs"
-  depends=('xbmc')
+  depends=('dfatmo' 'xbmc')
 
   cd "${srcdir}/${pkgbase}-${pkgver}"
   make XBMCDESTDIR="$pkgdir/usr/share/xbmc/addons/script.dfatmo" xbmcinstall

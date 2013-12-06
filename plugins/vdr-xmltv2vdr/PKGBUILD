@@ -1,29 +1,36 @@
 # Maintainer: Christopher Reimer <vdr4arch[at]creimer[dot]net>
 pkgname=vdr-xmltv2vdr
-pkgver=0.1.1_52_ge35c5b4
-_gitver=e35c5b48c1d3c9b217ac354eae71574e8584bd39
+pkgver=0.1.1_61_g8d66725
+_gitver=8d667255bfc28b5db2a87c0e881e072e2316104a
 _vdrapi=2.0.0
 pkgrel=1
 pkgdesc="Add epg info from epg sources into vdr"
 url="http://projects.vdr-developer.org/projects/plg-xmltv2vdr"
 arch=('x86_64' 'i686')
 license=('GPL2')
-depends=('curl' 'enca' 'libxslt' 'libzip' 'pcre' 'sqlite' "vdr-api=${_vdrapi}")
+depends=('curl' 'enca' 'libxslt' 'libzip' 'sqlite' "vdr-api=${_vdrapi}")
 makedepends=('git')
 install="$pkgname.install"
 _plugname=$(echo $pkgname | sed 's/vdr-//g')
-source=("git://projects.vdr-developer.org/vdr-plugin-xmltv2vdr.git#commit=$_gitver")
+source=("git://projects.vdr-developer.org/vdr-plugin-xmltv2vdr.git#commit=$_gitver"
+        'xmltv2vdr-vdr2.1.2compat.diff')
 backup=("var/lib/epgsources/epgdata2xmltv")
-md5sums=('SKIP')
+md5sums=('SKIP'
+         'a1865ca3040ffc9bcc18e3bbfdf63cf8')
 
 pkgver() {
   cd "${srcdir}/vdr-plugin-$_plugname"
   git describe --tags | sed 's/-/_/g;s/v//'
 }
 
+prepare() {
+  cd "${srcdir}/vdr-plugin-$_plugname"
+  patch -p1 -i "$srcdir/xmltv2vdr-vdr2.1.2compat.diff"
+}
+
 build() {
-  cd "${srcdir}/vdr-plugin-$_plugname"/dist/epgdata2xmltv
-  make -j1
+  cd "${srcdir}/vdr-plugin-$_plugname"
+  make -j1 -C dist/epgdata2xmltv
 }
 
 package() {
@@ -34,11 +41,9 @@ package() {
        CXXFLAGS="$(pkg-config vdr --variable=cxxflags)" \
        VDRDIR="/usr/include/vdr" \
        LIBDIR="$pkgdir/$(pkg-config vdr --variable=libdir)" \
-       LOCALEDIR="$pkgdir/$(pkg-config vdr --variable=locdir)" \
-       GIT_REV=''
+       LOCALEDIR="$pkgdir/$(pkg-config vdr --variable=locdir)"
 
-  cd dist/epgdata2xmltv
-  make epgdata2xmltv
-  install -Dm755 epgdata2xmltv "$pkgdir/usr/bin/epgdata2xmltv"
-  install -Dm644 epgdata2xmltv.dist "$pkgdir/var/lib/epgsources/epgdata2xmltv"
+  install -Dm755 dist/epgdata2xmltv/epgdata2xmltv "$pkgdir/usr/bin/epgdata2xmltv"
+  install -Dm644 dist/epgdata2xmltv/epgdata2xmltv.dist "$pkgdir/var/lib/epgsources/epgdata2xmltv"
+  install -Dm644 dist/tvm2xmltv/tvm2xmltv.dist "$pkgdir/var/lib/epgsources/tvm2xmltv"
 }

@@ -2,9 +2,9 @@
 Description=Open Source Conditional Access Module
 
 [Service]
-Type=forking
-ExecStart=/usr/bin/oscam -b
-TimeOutStopSec=30
+Type=simple
+ExecStart=/usr/bin/oscam --restart 2
+TimeoutStopSec=30
 User=oscam
 
 [Install]

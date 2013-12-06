@@ -1,8 +1,8 @@
 # Maintainer: Christopher Reimer <vdr4arch[at]creimer[dot]net>
 pkgname=vdr-extrecmenu
-pkgver=1.2.2_15_g2131477
+pkgver=1.2.2_21_g8e43c91
 epoch=1
-_gitver=21314770e74d4d33d811b9a48097ff8d41ef8ae7
+_gitver=8e43c91736a35b197507999ac53de399b0f48dfd
 _vdrapi=2.0.0
 pkgrel=1
 pkgdesc="provides additional functions to VDR's recordings menu"
@@ -28,5 +28,6 @@ package() {
        CXXFLAGS="$(pkg-config vdr --variable=cxxflags)" \
        VDRDIR="/usr/include/vdr" \
        LIBDIR="$pkgdir/$(pkg-config vdr --variable=libdir)" \
-       LOCALEDIR="$pkgdir/$(pkg-config vdr --variable=locdir)"
+       LOCALEDIR="$pkgdir/$(pkg-config vdr --variable=locdir)" \
+       EXTRECMENU_USE_VDR_CUTTER=1
 }

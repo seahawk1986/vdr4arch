@@ -1,6 +1,14 @@
-diff -ruN v4l-dvb-saa716x-20120304/linux/drivers/media/common/saa716x/saa716x_ff_cmd.h v4l-dvb-saa716x-20120304.patched/linux/drivers/media/common/saa716x/saa716x_ff_cmd.h
---- v4l-dvb-saa716x-20120304/linux/drivers/media/common/saa716x/saa716x_ff_cmd.h	2012-03-04 18:01:07.000000000 +0100
-+++ v4l-dvb-saa716x-20120304.patched/linux/drivers/media/common/saa716x/saa716x_ff_cmd.h	2012-06-05 20:01:17.278360376 +0200
+diff -r cfa4b4faab67 linux/drivers/media/common/saa716x/Makefile
+--- a/linux/drivers/media/common/saa716x/Makefile	Sun Feb 24 14:01:09 2013 +0100
++++ b/linux/drivers/media/common/saa716x/Makefile	Sun Jul 28 16:10:10 2013 +0200
+@@ -24,3 +24,4 @@
+ obj-$(CONFIG_DVB_SAA716X_FF)	  += saa716x_ff.o
+ 
+ EXTRA_CFLAGS = -Idrivers/media/dvb/dvb-core/ -Idrivers/media/dvb/frontends/ -Idrivers/media/dvb-core/ -Idrivers/media/dvb-frontends/
++ccflags-y += -Idrivers/media/tuners/
+diff -r cfa4b4faab67 linux/drivers/media/common/saa716x/saa716x_ff_cmd.h
+--- a/linux/drivers/media/common/saa716x/saa716x_ff_cmd.h	Sun Feb 24 14:01:09 2013 +0100
++++ b/linux/drivers/media/common/saa716x/saa716x_ff_cmd.h	Sun Jul 28 16:10:10 2013 +0200
 @@ -1,6 +1,24 @@
  #ifndef __SAA716x_FF_CMD_H
  #define __SAA716x_FF_CMD_H
